@@ -1,0 +1,485 @@
+:root {
+  --background: #f7f8fa;
+  --surface: #ffffff;
+  --border: #e5e7eb;
+  --text: #111827;
+  --muted: #6b7280;
+  --active: #eeeeee;
+  --green-bg: #e9f7ef;
+  --green-text: #247a45;
+  --red-bg: #fdecec;
+  --red-text: #b42318;
+  --yellow-bg: #fff6db;
+  --yellow-text: #8a6116;
+  --gray-bg: #f2f4f7;
+  --blue-bg: #eef4ff;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  font-family: Arial, "Segoe UI", sans-serif;
+  background: var(--background);
+  color: var(--text);
+  font-size: 14px;
+}
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; }
+.app { min-height: 100vh; display: flex; }
+.sidebar {
+  width: 180px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  padding: 16px 12px;
+}
+.brand {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 8px 8px 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+.nav { display: flex; flex-direction: column; gap: 4px; }
+.nav a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+}
+.nav a.active { background: var(--active); font-weight: 600; }
+.nav svg { width: 16px; height: 16px; stroke-width: 1.7; }
+
+.main { margin-left: 180px; width: calc(100% - 180px); min-width: 0; }
+.topbar {
+  height: 52px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+.topbar-left, .topbar-right { display: flex; align-items: center; gap: 8px; }
+.topbar-title { font-weight: 600; }
+.topbar svg { width: 16px; height: 16px; }
+.content { padding: 24px; }
+.section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.section-head {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.section-head h1, .section-head h2 { margin: 0 0 4px; }
+.section-head h1 { font-size: 22px; font-weight: 600; }
+.section-head h2 { font-size: 16px; font-weight: 600; }
+.muted { color: var(--muted); font-size: 12px; }
+.section-body { padding: 16px; }
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px 16px;
+  align-items: end;
+}
+.filter-grid.history { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.field { min-width: 0; }
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.input, .select-trigger {
+  width: 100%;
+  height: 38px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 0 10px;
+  border-radius: 4px;
+  color: var(--text);
+}
+.input:focus, .select-trigger:focus {
+  outline: 1px solid #9ca3af;
+  outline-offset: -1px;
+}
+.reset-btn {
+  height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.reset-btn:hover { background: #fafafa; }
+
+.custom-select { position: relative; }
+.select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  text-align: left;
+}
+.select-trigger .chevron { font-size: 12px; color: var(--muted); }
+.select-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  max-height: 220px;
+  overflow-y: auto;
+}
+.custom-select.open .select-menu { display: block; }
+.select-option {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: var(--surface);
+  padding: 9px 10px;
+  text-align: left;
+  cursor: pointer;
+}
+.select-option:hover, .select-option.selected { background: var(--active); }
+
+.table-wrap { width: 100%; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+  font-size: 13px;
+}
+th { font-weight: 600; background: #fafafa; }
+th.sortable { cursor: pointer; user-select: none; }
+.sort-mark { color: var(--muted); margin-left: 4px; }
+.badge {
+  display: inline-block;
+  padding: 3px 7px;
+  border-radius: 3px;
+  font-size: 12px;
+  border: 1px solid transparent;
+}
+.badge.success { background: var(--green-bg); color: var(--green-text); }
+.badge.error { background: var(--red-bg); color: var(--red-text); }
+.badge.pending { background: var(--yellow-bg); color: var(--yellow-text); }
+.badge.on { background: var(--green-bg); color: var(--green-text); }
+.badge.off { background: var(--gray-bg); color: #4b5563; }
+
+.table-footer {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+}
+.pagination { display: flex; gap: 4px; flex-wrap: wrap; }
+.page-btn {
+  min-width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  border-radius: 3px;
+}
+.page-btn.active { background: var(--active); font-weight: 600; }
+.page-btn:disabled { opacity: .45; cursor: default; }
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 16px;
+}
+.metric {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 16px;
+}
+.metric-title { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.metric-value { font-size: 24px; font-weight: 600; }
+
+.chart-wrap { height: 320px; padding: 12px; }
+canvas { display: block; width: 100%; height: 100%; }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+.legend span { font-size: 12px; }
+.legend-dot { display:inline-block; width: 10px; height: 10px; margin-right:6px; border:1px solid #999; vertical-align:-1px; }
+
+.device-list { display: grid; gap: 8px; }
+.device-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.device-row:last-child { border-bottom: 0; }
+.switch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: #d1d5db;
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.switch::after {
+  content:"";
+  position:absolute;
+  width:18px; height:18px;
+  background:#fff;
+  border:1px solid #bbb;
+  border-radius:50%;
+  top:3px; left:3px;
+  transition:left .15s ease;
+}
+.switch.on { background:#6b7280; }
+.switch.on::after { left:23px; }
+
+.profile-grid {
+  display:grid;
+  grid-template-columns: 120px 1fr;
+  gap: 24px;
+  align-items:start;
+}
+.avatar {
+  width: 96px; height: 96px;
+  border: 1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  background:#f3f4f6;
+  font-size: 28px;
+  font-weight:600;
+}
+.info-list { border-top:1px solid var(--border); }
+.info-row {
+  display:grid;
+  grid-template-columns: 180px 1fr;
+  gap:16px;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+}
+.info-label { color:var(--muted); }
+.resource-link { text-decoration: underline; }
+
+@media (max-width: 980px) {
+  .filter-grid, .filter-grid.history { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .metric-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .sidebar { width: 150px; }
+  .main { margin-left:150px; width:calc(100% - 150px); }
+  .content, .topbar { padding-left:16px; padding-right:16px; }
+  .filter-grid, .filter-grid.history { grid-template-columns: 1fr; }
+  .profile-grid { grid-template-columns: 1fr; }
+  .info-row { grid-template-columns: 1fr; gap:4px; }
+}
+
+
+/* =========================================================
+   ONE-SCREEN LAYOUT FOR PAGES 1-3 ONLY
+   Keeps existing content/functions; removes page-level scroll.
+   Profile is intentionally unaffected.
+   ========================================================= */
+body.one-screen {
+  height: 100vh;
+  min-height: 0;
+  overflow: hidden;
+}
+body.one-screen .app {
+  height: 100vh;
+  min-height: 0;
+  overflow: hidden;
+}
+body.one-screen .main {
+  height: 100vh;
+  min-height: 0;
+  overflow: hidden;
+}
+body.one-screen .content {
+  height: 100vh;
+  min-height: 0;
+  padding: 12px 16px;
+  overflow: hidden;
+}
+body.one-screen .section {
+  margin-bottom: 0;
+  min-height: 0;
+}
+body.one-screen .section-head {
+  padding: 10px 12px;
+}
+body.one-screen .section-body {
+  padding: 10px 12px;
+}
+body.one-screen .section-head h1 {
+  font-size: 20px;
+}
+body.one-screen .section-head h2 {
+  font-size: 15px;
+}
+
+/* Dashboard: metrics / flexible chart / device controls */
+body.dashboard-page .content {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 8px;
+}
+body.dashboard-page .content > .section:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+body.dashboard-page .content > .section:nth-child(2) .section-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+body.dashboard-page .metric-grid {
+  gap: 10px;
+}
+body.dashboard-page .metric {
+  padding: 10px 12px;
+}
+body.dashboard-page .metric-title {
+  margin-bottom: 4px;
+}
+body.dashboard-page .metric-value {
+  font-size: 21px;
+}
+body.dashboard-page .legend {
+  margin-bottom: 6px;
+}
+body.dashboard-page .chart-wrap {
+  flex: 1;
+  min-height: 150px;
+  height: auto;
+  padding: 4px 8px 0;
+}
+body.dashboard-page .device-list {
+  gap: 0;
+}
+body.dashboard-page .device-row {
+  padding: 8px 0;
+}
+
+/* Data Sensors and History: title / filters / table fill one viewport */
+body.data-page .content,
+body.history-page .content {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: 8px;
+}
+body.data-page .content > .section:last-child,
+body.history-page .content > .section:last-child {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+body.data-page .filter-grid,
+body.history-page .filter-grid.history {
+  gap: 8px 12px;
+}
+body.data-page .field label,
+body.history-page .field label {
+  margin-bottom: 4px;
+}
+body.data-page .input,
+body.data-page .select-trigger,
+body.data-page .reset-btn,
+body.history-page .input,
+body.history-page .select-trigger,
+body.history-page .reset-btn {
+  height: 34px;
+}
+body.data-page .table-wrap,
+body.history-page .table-wrap {
+  flex: 1;
+  min-height: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+body.data-page th,
+body.data-page td,
+body.history-page th,
+body.history-page td {
+  padding: 6px 10px;
+  font-size: 12px;
+  line-height: 1.15;
+}
+body.data-page .table-footer,
+body.history-page .table-footer {
+  min-height: 40px;
+  padding: 4px 10px;
+}
+body.data-page .page-btn,
+body.history-page .page-btn {
+  min-width: 28px;
+  height: 28px;
+}
+
+/* Extra compaction for shorter laptop viewports without scaling the page. */
+@media (min-width: 761px) and (max-height: 700px) {
+  body.one-screen .content { padding-top: 8px; padding-bottom: 8px; }
+  body.one-screen .section-head { padding: 7px 10px; }
+  body.one-screen .section-body { padding: 7px 10px; }
+  body.dashboard-page .content,
+  body.data-page .content,
+  body.history-page .content { gap: 6px; }
+  body.dashboard-page .metric { padding: 7px 10px; }
+  body.dashboard-page .metric-value { font-size: 19px; }
+  body.dashboard-page .chart-wrap { min-height: 120px; }
+  body.dashboard-page .device-row { padding: 6px 0; }
+  body.data-page .input,
+  body.data-page .select-trigger,
+  body.data-page .reset-btn,
+  body.history-page .input,
+  body.history-page .select-trigger,
+  body.history-page .reset-btn { height: 30px; }
+  body.data-page th,
+  body.data-page td,
+  body.history-page th,
+  body.history-page td { padding: 4px 9px; }
+  body.data-page .table-footer,
+  body.history-page .table-footer { min-height: 34px; }
+  body.data-page .page-btn,
+  body.history-page .page-btn { min-width: 26px; height: 26px; }
+}
+
+/* Preserve the existing responsive behavior on narrow screens. */
+@media (max-width: 760px) {
+  body.one-screen {
+    height: auto;
+    min-height: 100%;
+    overflow-y: auto;
+  }
+  body.one-screen .app,
+  body.one-screen .main,
+  body.one-screen .content {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+  body.dashboard-page .content,
+  body.data-page .content,
+  body.history-page .content {
+    display: block;
+  }
+  body.one-screen .section {
+    margin-bottom: 12px;
+  }
+  body.dashboard-page .chart-wrap {
+    height: 260px;
+  }
+}

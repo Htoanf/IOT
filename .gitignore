@@ -1,0 +1,33 @@
+# Reports and Word documents
+*.[dD][oO][cC]
+*.[dD][oO][cC][xX]
+*.[dD][oO][cC][mM]
+*.[dD][oO][tT]
+*.[dD][oO][tT][xX]
+~$*
+TIEN_DO_IOT.md
+bao-cao*/
+
+# Build output and IDE files
+**/target/
+**/build/
+.idea/
+.vscode/
+*.iml
+*.class
+*.log
+*.bak
+.DS_Store
+Thumbs.db
+
+# Local credentials and configuration
+.env
+.env.*
+!.env.example
+**/application-local.properties
+**/application-local.yml
+**/application-local.yaml
+mosquitto.passwd
+password_file
+*.pem
+*.key

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IoT Monitor - Data Sensors</title>
+  <link rel="stylesheet" href="css/common.css?v=clean-page-titles">
+  <link rel="stylesheet" href="css/data-sensor.css?v=api-1">
+</head>
+
+<body class="one-screen data-page">
+  <div class="app">
+
+    <aside class="sidebar">
+      <div class="brand">IoT Monitor</div>
+      <nav class="nav">
+        <a class="" href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+          </svg><span>Dashboard</span></a>
+        <a class="active" href="data-sensor.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M8 12h8M12 8v8" />
+          </svg><span>Data Sensors</span></a>
+        <a class="" href="history.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M4 19h16M6 16V9M12 16V5M18 16v-4" />
+          </svg><span>History</span></a>
+        <a class="" href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 21c1.8-4.3 5-6 8-6s6.2 1.7 8 6" />
+          </svg><span>Profile</span></a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="content">
+
+        <section class="section">
+          <div class="section-head page-title-row">
+            <h1>Data Sensors</h1>
+            <div id="sensorLoadStatus" role="status" hidden></div>
+            <button id="refreshSensors" class="reset-btn" type="button">Tải lại</button>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>Bộ lọc dữ liệu cảm biến</h2>
+          </div>
+          <div class="section-body">
+            <div class="filter-grid">
+              <div class="field">
+                <label for="searchCriterion">Tiêu chí tìm kiếm</label>
+                <select id="searchCriterion" class="input">
+                  <option value="all">Tất cả</option>
+                  <option value="time">Thời gian</option>
+                  <option value="light">Ánh sáng</option>
+                  <option value="temperature">Nhiệt độ</option>
+                  <option value="humidity">Độ ẩm</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="searchInput">Nội dung tìm kiếm</label>
+                <input id="searchInput" class="input" type="text" placeholder="Nhập nội dung cần tìm...">
+              </div>
+              <button id="searchBtn" class="search-btn" type="button">Tìm kiếm</button>
+              <button id="resetBtn" class="reset-btn" type="button">Xoá</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="table-wrap" id="sensorTableWrap" aria-busy="true">
+            <table aria-label="Dữ liệu cảm biến">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th class="sortable" data-sort="typeLabel">Loại cảm biến <span class="sort-mark">↕</span></th>
+                  <th class="sortable" data-sort="value">Thông số đo <span class="sort-mark">↕</span></th>
+                  <th class="sortable" data-sort="time">Thời gian <span class="sort-mark">↕</span></th>
+                </tr>
+              </thead>
+              <tbody id="sensorBody"></tbody>
+            </table>
+          </div>
+          <div class="table-footer">
+            <div class="footer-left"><label for="sensorPageSize">Số bản ghi:</label><select id="sensorPageSize"
+                class="page-size">
+                <option value="10">10</option>
+                <option value="12">12</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+              </select>
+              <div id="sensorSummary" class="muted"></div>
+            </div>
+            <div id="sensorPagination" class="pagination"></div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="js/data-sensor.js?v=auto-2"></script>
+</body>
+
+</html>

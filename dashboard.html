@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IoT Monitor - Dashboard</title>
+  <link rel="stylesheet" href="css/common.css?v=restore-1600">
+  <link rel="stylesheet" href="css/dashboard.css?v=devices-3">
+</head>
+
+<body class="one-screen dashboard-page">
+  <div class="app">
+
+    <aside class="sidebar">
+      <div class="brand">IoT Monitor</div>
+      <nav class="nav">
+        <a class="active" href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+          </svg><span>Dashboard</span></a>
+        <a class="" href="data-sensor.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M8 12h8M12 8v8" />
+          </svg><span>Data Sensors</span></a>
+        <a class="" href="history.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M4 19h16M6 16V9M12 16V5M18 16v-4" />
+          </svg><span>History</span></a>
+        <a class="" href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 21c1.8-4.3 5-6 8-6s6.2 1.7 8 6" />
+          </svg><span>Profile</span></a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="content">
+
+        <section class="section">
+          <div class="section-head">
+            <h1>Dashboard</h1>
+            <div id="sensorStatus" role="status" hidden></div>
+          </div>
+          <div class="section-body">
+            <div class="metric-grid">
+              <div class="metric">
+                <div class="metric-title">Nhiệt độ</div>
+                <div class="metric-value" id="temperatureValue">— °C</div>
+                <div class="metric-time muted" id="temperatureTime">Chưa có dữ liệu</div>
+              </div>
+              <div class="metric">
+                <div class="metric-title">Độ ẩm</div>
+                <div class="metric-value" id="humidityValue">— %</div>
+                <div class="metric-time muted" id="humidityTime">Chưa có dữ liệu</div>
+              </div>
+              <div class="metric">
+                <div class="metric-title">Ánh sáng</div>
+                <div class="metric-value" id="lightValue">— lux</div>
+                <div class="metric-time muted" id="lightTime">Chưa có dữ liệu</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>Biểu đồ môi trường</h2>
+            <div class="muted" id="chartStatus" role="status">Tối đa 15 điểm gần nhất mỗi cảm biến</div>
+          </div>
+          <div class="section-body">
+            <div class="legend">
+              <span><i class="legend-dot" style="background:#2563eb"></i>Nhiệt độ</span>
+              <span><i class="legend-dot" style="background:#16a34a"></i>Độ ẩm</span>
+              <span><i class="legend-dot" style="background:#f59e0b"></i>Ánh sáng</span>
+            </div>
+            <div class="chart-wrap"><canvas id="envChart" role="img" aria-label="Biểu đồ nhiệt độ, độ ẩm và ánh sáng theo thời gian"></canvas></div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>Điều khiển thiết bị</h2>
+            <div class="muted" id="deviceStatus" role="status">Trạng thái xác nhận cuối từ thiết bị; đang tải...</div>
+          </div>
+          <div class="section-body">
+            <div class="device-list">
+              <div class="device-row">
+                <div class="device-name"><strong>LED 1</strong></div>
+                <div id="fanState" role="status">Chưa rõ</div>
+                <button class="switch" id="fanSwitch" type="button" aria-label="Bật tắt LED 1" aria-describedby="fanState" disabled></button>
+              </div>
+              <div class="device-row">
+                <div class="device-name"><strong>LED 2</strong></div>
+                <div id="lightState" role="status">Chưa rõ</div>
+                <button class="switch" id="lightSwitch" type="button" aria-label="Bật tắt LED 2" aria-describedby="lightState" disabled></button>
+              </div>
+              <div class="device-row">
+                <div class="device-name is-unknown"><strong>LED 3</strong></div>
+                <div id="acState" role="status">Chưa rõ</div>
+                <button class="switch" id="acSwitch" type="button" aria-label="Bật tắt LED 3" aria-describedby="acState" disabled></button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="js/dashboard.js?v=tooltip-live-hover"></script>
+</body>
+
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IoT Monitor - History</title>
+  <link rel="stylesheet" href="css/common.css?v=clean-page-titles">
+  <link rel="stylesheet" href="css/history.css?v=api-1">
+</head>
+
+<body class="one-screen history-page">
+  <div class="app">
+
+    <aside class="sidebar">
+      <div class="brand">IoT Monitor</div>
+      <nav class="nav">
+        <a class="" href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+          </svg><span>Dashboard</span></a>
+        <a class="" href="data-sensor.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M8 12h8M12 8v8" />
+          </svg><span>Data Sensors</span></a>
+        <a class="active" href="history.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M4 19h16M6 16V9M12 16V5M18 16v-4" />
+          </svg><span>History</span></a>
+        <a class="" href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 21c1.8-4.3 5-6 8-6s6.2 1.7 8 6" />
+          </svg><span>Profile</span></a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="content">
+
+        <section class="section">
+          <div class="section-head page-title-row">
+            <h1>History</h1>
+            <div id="historyLoadStatus" role="status" hidden></div>
+            <button id="refreshHistory" class="reset-btn" type="button">Tải lại</button>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>Bộ lọc lịch sử điều khiển</h2>
+            <button id="resetHistory" class="reset-btn" type="button">Xoá bộ lọc</button>
+          </div>
+          <div class="section-body">
+            <div class="filter-grid history">
+              <div class="field">
+                <label for="historySearch">Tìm kiếm theo thời gian</label>
+                <input id="historySearch" class="input" type="text" inputmode="numeric" placeholder="Nhập thời gian"
+                  aria-label="Nhập thời gian tìm kiếm">
+              </div>
+
+
+              <div class="field">
+                <label>Thiết bị</label>
+                <div class="custom-select" id="deviceFilter" data-value="all">
+                  <button type="button" class="select-trigger">
+                    <span class="select-value">Tất cả thiết bị</span>
+                    <span class="chevron">▼</span>
+                  </button>
+                  <div class="select-menu">
+                    <button type="button" class="select-option selected" data-value="all">Tất cả thiết bị</button>
+                    <button type="button" class="select-option" data-value="1">LED 1</button>
+                    <button type="button" class="select-option" data-value="2">LED 2</button>
+                    <button type="button" class="select-option" data-value="3">LED 3</button>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="field">
+                <label>Trạng thái thiết bị</label>
+                <div class="custom-select" id="actionFilter" data-value="all">
+                  <button type="button" class="select-trigger">
+                    <span class="select-value">Tất cả</span>
+                    <span class="chevron">▼</span>
+                  </button>
+                  <div class="select-menu">
+                    <button type="button" class="select-option selected" data-value="all">Tất cả</button><button
+                      type="button" class="select-option" data-value="ON">BẬT</button><button type="button"
+                      class="select-option" data-value="OFF">TẮT</button>
+                    <button type="button" class="select-option" data-value="UNKNOWN">Chưa rõ</button>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="field">
+                <label>Kết quả</label>
+                <div class="custom-select" id="statusFilter" data-value="all">
+                  <button type="button" class="select-trigger">
+                    <span class="select-value">Tất cả trạng thái</span>
+                    <span class="chevron">▼</span>
+                  </button>
+                  <div class="select-menu">
+                    <button type="button" class="select-option selected" data-value="all">Tất cả trạng
+                      thái</button><button type="button" class="select-option" data-value="SUCCESS">Thành
+                      công</button><button type="button" class="select-option" data-value="FAILED">Thất
+                      bại</button>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="table-wrap" id="historyTableWrap" aria-busy="true">
+            <table aria-label="Lịch sử phản hồi thiết bị">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th class="sortable" data-sort="device">Thiết bị <span class="sort-mark">↕</span></th>
+                  <th class="sortable" data-sort="controller">Người điều khiển <span class="sort-mark">↕</span></th>
+                  <th class="sortable" data-sort="action">Trạng thái thiết bị <span class="sort-mark">↕</span></th>
+                  <th class="sortable" data-sort="status">Kết quả <span class="sort-mark">↕</span></th>
+                  <th class="sortable" data-sort="time">Thời gian <span class="sort-mark">↕</span></th>
+                </tr>
+              </thead>
+              <tbody id="historyBody"></tbody>
+            </table>
+          </div>
+          <div class="table-footer">
+            <div class="footer-left"><label for="historyPageSize">Số bản ghi:</label><select id="historyPageSize"
+                class="page-size">
+                <option value="10">10</option>
+                <option value="12">12</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+              </select>
+              <div id="historySummary" class="muted"></div>
+            </div>
+            <div id="historyPagination" class="pagination"></div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="js/history.js?v=api-1"></script>
+</body>
+
+</html>
